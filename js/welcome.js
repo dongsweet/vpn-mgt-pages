@@ -11,9 +11,26 @@ const INNER_RES_LIST_BY_BRANCH = "/api/innerResource/listByBranch";
     'use strict'
 
     function fillMainContent(data) {
-        for(let d of data) {
-            $('#welcome-container').append(`<h5 class="mb-2">${d.branch}</h5>`);
-        }
+        data.forEach(d => {
+            let row = $('<div class="row"></div><!-- /.row -->');
+            $('#welcome-container').append(`<h5 class="mb-2">${d.branch}</h5>`, row);
+            
+            d.resources.forEach(r => {
+                let col = $('<div class="col-md-3 col-sm-6 col-12"></div><!-- /.col -->');
+                let infobox = $('<div class="info-box"></div><!-- /.info-box -->');
+                let content = $('<div class="info-box-content"></div><!-- /.info-box-content -->');
+                content.append(`<span class="info-box-text">${r.type + (tag ? '(' + tag + ')' : '')}</span>`);
+                content.append(`<span class="info-box-text">服务地址：${r.service_domain ? r.service_domain : r.service_ip}</span>`);
+                content.append(`<span class="info-box-text">真实地址：${r.real_ip ? r.real_ip : r.service_ip}</span>`);
+                content.append(`<span class="info-box-text"><a href="${r.service_url ? r.service_url : '#'}" target="_blank">${r.service_url ? '单击访问' : '使用工具访问'}</a></span>`);
+                
+                infobox.append('<span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>');
+                infobox.append(content);
+
+                col.append(infobox);
+                row.append(col);
+            });
+        });
     }
 
     $.getJSON(INNER_RES_LIST_BY_BRANCH)
