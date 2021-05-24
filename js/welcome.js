@@ -33,7 +33,7 @@ const INNER_RES_LIST_BY_BRANCH = "/api/innerResource/listByBranch";
                 content.append(`<span class="info-box-text">真实地址：${r.real_ip ? r.real_ip : r.service_ip}</span>`);
                 content.append(`<span class="info-box-text">${r.service_url ? '<a href="' + r.service_url + '" target="_blank">单击访问</a>': '使用工具访问'}</span>`);
                 
-                infobox.append(`<span class="info-box-icon bg-info"><i class="${types[r.type_id] ? types[r.type_id].icon: types['other'].icon}"></i></span>`);
+                infobox.append(`<span class="info-box-icon bg-info"><i class="${types['type_' + r.type_id] ? types['type_' + r.type_id].icon: types['other'].icon}"></i></span>`);
                 infobox.append(content);
 
                 col.append(infobox);
