@@ -25,7 +25,7 @@ const INNER_RES_LIST_BY_BRANCH = "/api/innerResource/listByBranch";
             $('#welcome-container').append(`<h5 class="mb-2">${d.branch}</h5>`, row);
             
             d.resources.forEach(r => {
-                let col = $('<div class="col-md-3 col-sm-6 col-12"></div><!-- /.col -->');
+                let col = $('<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"></div><!-- /.col -->');
                 let infobox = $('<div class="info-box"></div><!-- /.info-box -->');
                 let content = $('<div class="info-box-content"></div><!-- /.info-box-content -->');
                 content.append(`<span class="info-box-text">${r.type + (r.tag ? '(' + r.tag + ')' : '')}</span>`);
