@@ -11,12 +11,12 @@ const INNER_RES_LIST_BY_BRANCH = "/api/innerResource/listByBranch";
     'use strict'
 
     const types = {
-        type_1: {icon: 'fas fa-network-wired', color: 'bg-indigo'},
-        type_2: {icon: 'fab fa-fort-awesome', color: 'bg-navy'},
-        type_3: {icon: 'fas fa-cloud', color: 'bg-purple'},
-        type_6: {icon: 'fab fa-watchman-monitoring', color: 'bg-olive'},
-        type_7: {icon: 'far fa-bell', color: 'bg-orange'},
-        other: {icon: 'fas fa-border-style', color: 'bg-secondary'},
+        type_1: {icon: 'fas fa-network-wired', color: 'bg-danger'},     //分支端
+        type_2: {icon: 'fab fa-fort-awesome', color: 'bg-warning'},     //堡垒机
+        type_3: {icon: 'fas fa-cloud', color: 'bg-info'},               //云平台
+        type_6: {icon: 'fab fa-watchman-monitoring', color: 'bg-olive'},//监控代理
+        type_7: {icon: 'far fa-bell', color: 'bg-teal'},                //Zabbix
+        other: {icon: 'fas fa-border-style', color: 'bg-secondary'},    //其他
     }
 
     function fillMainContent(data) {
