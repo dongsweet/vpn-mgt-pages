@@ -6,6 +6,7 @@
 /* eslint-disable camelcase */
 
 const INNER_RES_LIST_BY_BRANCH = "/api/innerResource/listByBranch";
+const VPN_USER_INFO = "/api/vpnUser/getUserByIp";
 
 (function ($) {
     'use strict'
@@ -45,12 +46,25 @@ const INNER_RES_LIST_BY_BRANCH = "/api/innerResource/listByBranch";
         });
     }
 
+    //加载用户信息
+    $.getJSON(VPN_USER_INFO)
+    .done(data => {
+        $("#vpnUserRealName").text(data.realname);
+        $("#vpnUserName").text(data.username);
+        $("#vpnIp").text(data.ip);
+    }).fail((jqXHR, textStatus, err) => {
+        console.error(err);
+    });
+
+    //加载导航数据
     $.getJSON(INNER_RES_LIST_BY_BRANCH)
     .done(data => {
         fillMainContent(data);
     }).fail((jqXHR, textStatus, err) => {
         console.error(err);
     });
+
+
 
     
 
