@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | DataTables</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="../css/googlefonts.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link">Contact</a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Navbar Search -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown">欢迎您，<span id="vpnUserRealName"></span></a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <a href="#" class="dropdown-item">
+              <div class="media">
+                <div class="media-body">
+                  <p class="text-sm"><i class="fas fa-at ml-1"></i><strong class="ml-1">Login Name: </strong><span
+                      class="ml-1" id="vpnUserName"></span></p>
+                  <p class="text-sm"><i class="fas fa-at ml-1"></i><strong class="ml-1">IP Address: </strong><span
+                      class="ml-1" id="vpnIp"></span></p>
+                  <p class="text-sm"><i class="fas fa-at ml-1"></i><strong class="ml-1">User Group: </strong><span
+                      class="ml-1" id="vpnUserGroup"></span></p>
+                </div>
+              </div>
+            </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="../index3.html" class="brand-link">
+        <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light">AdminLTE 3</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            <li class="nav-item menu-open">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  资源管理
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="../../index.html" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>资源列表</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content-->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <!-- <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1></h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">资源管理</li>
+                <li class="breadcrumb-item active">资源列表</li>
+              </ol>
+            </div>
+          </div>
+        </div>/.container-fluid -->
+      <!--</section> -->
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card card-primary card-outline">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fas fa-edit"></i>
+                    资源列表
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <button type="button" class="btn btn-primary" id="btnNewRes">新建资源</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="card card-primary card-outline">
+                <div class="card-body">
+                  <table id="tableResources" class="table table-bordered table-striped" style="width: 100%;">
+                    <thead>
+                      <tr>
+                        <th>分支ID</th>
+                        <th>分支</th>
+                        <th>类型</th>
+                        <th>标记</th>
+                        <th>服务IP</th>
+                        <th>域名绑定</th>
+                        <th>服务URL</th>
+                        <th>真实IP</th>
+                        <th>描述</th>
+                        <th>启用</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+
+        <div class="modal fade" id="divEditor">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="editorTitle"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form class="form-horizontal" id="formEditor">
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                  <div id="divError" class="alert alert-warning" style="display: none;">
+                    <span id="spanError"></span>
+                  </div>
+                  <div class="form-group row">
+                    <label for="selectBranch" class="col-sm-2 col-form-label">分支</label>
+                    <div class="col-sm-10">
+                      <select class="form-control select2" id="selectBranch" name="branch_id"></select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="selectType" class="col-sm-2 col-form-label">类型</label>
+                    <div class="col-sm-10">
+                      <select class="form-control select2" id="selectType" name="type_id"></select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputTag" class="col-sm-2 col-form-label">标记</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputTag" name="tag" placeholder="标记">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputServiceIp" class="col-sm-2 col-form-label">服务IP</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputServiceIp" name="service_ip"
+                        placeholder="服务IP（必选）">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputDomain" class="col-sm-2 col-form-label">域名绑定</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputDomain" name="service_domain" placeholder="域名绑定">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputServiceUrl" class="col-sm-2 col-form-label">服务URL</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputServiceUrl" name="service_url"
+                        placeholder="服务URL">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputRealIp" class="col-sm-2 col-form-label">真实IP</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputRealIp" name="real_ip"
+                        placeholder="真实IP（若未进行地址转换请留空）">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="switchEnabled">是否启用</label>
+                    <div class="col-sm-10">
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="switchEnabled" name="enabled">
+                        <label class="custom-control-label" for="switchEnabled"></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                  <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+        <div class="modal fade" id="divDelete">
+          <div class="modal-dialog">
+            <div class="modal-content bg-warning">
+              <div class="modal-header">
+                <h4 class="modal-title">删除</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>您正在删除<span id="spanDel"></span></p>
+                <p>删除后的数据无法恢复，是否确认？</p>
+                <p id="pDelError"></p>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-outline-dark" id='btnDelete'>删除</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.1.0
+      </div>
+      <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <!-- Select2 -->
+  <script src="../plugins/select2/js/select2.full.min.js"></script>
+  <!-- JQuery-JSON-Form-Binding -->
+  <script src="../plugins/jquery-json-form-binding/jquery-json-form-binding.js"></script>
+  <!-- jQuery Validation-->
+  <script src="../plugins/jquery-validation/jquery.validate.min.js"></script>
+  <script src="../plugins/jquery-validation/additional-methods.min.js"></script>
+  <!--<script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="../plugins/jszip/jszip.min.js"></script>
+  <script src="../plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="../plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script> -->
+  <!-- AdminLTE App -->
+  <script src="../dist/js/adminlte.min.js"></script>
+  <!-- JS Cookie -->
+  <script src="../3rd/js.cookie-2.2.1.min.js"></script>
+  <!-- Page specific script -->
+  <script src="js/common.js"></script>
+  <script src="js/resources.js"></script>
+</body>
+
+</html>
