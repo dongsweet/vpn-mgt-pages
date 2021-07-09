@@ -5,20 +5,20 @@ const RESOURCE_TYPE_LIST = '/api/admin/resource_types';
 (function ($) {
     'use strict'
 
-    var csrftoken = Cookies.get('csrfToken');
+    // var csrftoken = Cookies.get('csrfToken');
     var dataTable;
 
-    function csrfSafeMethod(method) {
-        // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-    $.ajaxSetup({
-        beforeSend: function (xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader('x-csrf-token', csrftoken);
-            }
-        },
-    });
+    // function csrfSafeMethod(method) {
+    //     // these HTTP methods do not require CSRF protection
+    //     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    // }
+    // $.ajaxSetup({
+    //     beforeSend: function (xhr, settings) {
+    //         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+    //             xhr.setRequestHeader('x-csrf-token', csrftoken);
+    //         }
+    //     },
+    // });
 
     function loadInitData() {
         dataTable = $('#tableResources').DataTable({
