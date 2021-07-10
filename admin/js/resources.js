@@ -1,3 +1,4 @@
+const MENU_ID = 'ZYGL_ZYLB';
 const BRANCH_LIST = '/api/admin/branches';
 const RESOURCES_URI = '/api/admin/resources';
 const RESOURCE_TYPE_LIST = '/api/admin/resource_types';

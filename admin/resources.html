@@ -44,20 +44,21 @@
       <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link" data-toggle="dropdown">欢迎您，<span id="vpnUserRealName"></span></a>
+          <a href="#" class="nav-link" data-toggle="dropdown">欢迎您，<span id="adminUserRealName"></span></a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <a href="#" class="dropdown-item">
               <div class="media">
                 <div class="media-body">
                   <p class="text-sm"><i class="fas fa-at ml-1"></i><strong class="ml-1">Login Name: </strong><span
-                      class="ml-1" id="vpnUserName"></span></p>
+                      class="ml-1" id="adminUserName"></span></p>
                   <p class="text-sm"><i class="fas fa-at ml-1"></i><strong class="ml-1">IP Address: </strong><span
-                      class="ml-1" id="vpnIp"></span></p>
-                  <p class="text-sm"><i class="fas fa-at ml-1"></i><strong class="ml-1">User Group: </strong><span
-                      class="ml-1" id="vpnUserGroup"></span></p>
+                      class="ml-1" id="loginIp"></span></p>
                 </div>
               </div>
             </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="aLogout">退出登录</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -81,10 +82,10 @@
       <div class="sidebar">
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" id="ulRoot">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
+            <!-- <li class="nav-item menu-open">
               <a href="#" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
@@ -100,7 +101,7 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> -->
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -329,7 +330,7 @@
   <script src="../3rd/js.cookie-2.2.1.min.js"></script>
   <!-- Page specific script -->
   <script src="js/common.js"></script>
-  <script src="js/menu.js"></script>
+  <script src="js/module_common.js"></script>
   <script src="js/resources.js"></script>
 </body>
 
