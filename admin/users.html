@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>资源列表</title>
+  <title>用户列表</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="../css/googlefonts.css">
@@ -100,29 +100,26 @@
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="fas fa-edit"></i>
-                    资源列表
+                    用户列表
                   </h3>
                 </div>
                 <div class="card-body">
-                  <button type="button" class="btn btn-primary" id="btnNewRes">新建资源</button>
+                  <button type="button" class="btn btn-primary" id="btnNewRes">新建用户</button>
                 </div>
               </div>
             </div>
             <div class="col-12">
               <div class="card card-primary card-outline">
                 <div class="card-body">
-                  <table id="tableResources" class="table table-bordered table-striped" style="width: 100%;">
+                  <table id="tableUsers" class="table table-bordered table-striped" style="width: 100%;">
                     <thead>
                       <tr>
-                        <th>分支ID</th>
-                        <th>分支</th>
+                        <th>组路径</th>
                         <th>类型</th>
-                        <th>标记</th>
-                        <th>服务IP</th>
-                        <th>域名绑定</th>
-                        <th>服务URL</th>
-                        <th>真实IP</th>
-                        <th>描述</th>
+                        <th>用户名</th>
+                        <th>真名</th>
+                        <th>IP</th>
+                        <th>电话</th>
                         <th>启用</th>
                         <th>操作</th>
                       </tr>
@@ -295,7 +292,7 @@
   <!-- Page specific script -->
   <script src="js/common.js"></script>
   <script src="js/module_common.js"></script>
-  <script src="js/resources.js"></script>
+  <script src="js/users.js"></script>
 </body>
 
 </html>

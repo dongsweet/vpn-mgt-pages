@@ -1,7 +1,5 @@
-const MENU_ID = 'ZYGL_ZYLB';
-const BRANCH_LIST = '/api/admin/branches';
-const RESOURCES_URI = '/api/admin/resources';
-const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
+const MENU_ID = 'YHGL_YHLB';
+const USERS_URI = '/api/admin/vpnUsers';
 
 (function ($) {
     'use strict'
@@ -9,19 +7,21 @@ const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
     var dataTable;
 
     function loadInitData() {
-        dataTable = $('#tableResources').DataTable({
-            ajax: RESOURCES_URI,
+        dataTable = $('#tableUsers').DataTable({
+            ajax: USERS_URI,
             responsive: true,
             columns: [
-                { data: 'branch_id', visible: false},
-                { data: 'branch' },
-                { data: 'type' },
-                { data: 'tag' },
-                { data: 'service_ip' },
-                { data: 'service_domain' },
-                { data: 'service_url' },
-                { data: 'real_ip' },
-                { data: 'description' },
+                { data: 'group_path' },
+                {
+                    data: 'type',
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                },
+                { data: 'username' },
+                { data: 'realname' },
+                { data: 'ip' },
+                { data: 'mobile' },
                 {
                     data: 'enabled',
                     render: function (data, type, row) {
@@ -128,7 +128,7 @@ const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
 
     function delComfirm(data) {
         $('#divDelete').modal('show');
-        $('#spanDel').text(`${data.branch}-${data.type}-${data.tag?'(' + data.tag + ')':''}`);
+        $('#spanDel').text(`${data.branch}-${data.type}-${data.tag ? '(' + data.tag + ')' : ''}`);
         $('#btnDelete').data('id', data.id);
     }
 
