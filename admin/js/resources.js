@@ -33,7 +33,7 @@ const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
                     }
                 },
                 {
-                    data: 'id',
+                    data: 'resource_id',
                     render: function (data, type, row) {
                         return `<a href="#" class="edit-button"><i class="far fa-edit"></i></a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -91,7 +91,7 @@ const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
     $('#btnNewRes').on('click', () => {
         $("#divError").hide();
         $('#divEditor').modal('show');
-        $("input[name='id']").val(null);
+        $("input[name='resource_id']").val(null);
         $('#editorTitle').text('创建资源');
         $('#formEditor')[0].reset();
         $('.select2').trigger('change');
@@ -126,7 +126,7 @@ const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
     function delComfirm(data) {
         $('#divDelete').modal('show');
         $('#spanDel').text(`${data.branch}-${data.type}-${data.tag?'(' + data.tag + ')':''}`);
-        $('#btnDelete').data('id', data.id);
+        $('#btnDelete').data('resource_id', data.resource_id);
     }
 
     function create(data) {
@@ -172,7 +172,7 @@ const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
             let data = Object.fromEntries(formData.entries());
             data.enabled = ("on" === data.enabled ? 1 : 0);
 
-            if (typeof data.id == 'undefined' || !data.id) {
+            if (typeof data.resource_id == 'undefined' || !data.resource_id) {
                 create(data);
             } else {
                 update(data);
