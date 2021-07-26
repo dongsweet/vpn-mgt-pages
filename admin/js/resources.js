@@ -13,7 +13,7 @@ const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
             ajax: RESOURCES_URI,
             responsive: true,
             columns: [
-                { data: 'branch_id', visible: false},
+                { data: 'branch_order', visible: false},
                 { data: 'branch' },
                 { data: 'type' },
                 { data: 'tag' },
@@ -53,12 +53,13 @@ const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
             });
 
         });
+        // 获取分支列表
         $.getJSON(BRANCH_LIST)
             .done(data => {
                 let selectBranchData = data.data.map(v => {
                     return {
-                        id: v.id,
-                        text: v.name
+                        id: v.branch_id,
+                        text: v.branch_id + "_" + v.name
                     };
                 });
                 $("#selectBranch").select2({
@@ -67,11 +68,13 @@ const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
             }).fail((jqXHR, textStatus, err) => {
                 console.error(err);
             });
+
+        // 获取资源类型列表
         $.getJSON(RESOURCE_TYPE_LIST)
             .done(data => {
                 let selectResTypeData = data.data.map(v => {
                     return {
-                        id: v.id,
+                        id: v.type_id,
                         text: v.name
                     };
                 });
@@ -85,12 +88,6 @@ const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
     }
 
 
-    $.validator.addMethod('IP4Checker', function (value) {
-        var ip = /^(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/;
-
-        return '' === value || value.match(ip);
-    }, 'Invalid IP address');
-
     $('#btnNewRes').on('click', () => {
         $("#divError").hide();
         $('#divEditor').modal('show');
@@ -103,7 +100,7 @@ const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
     $('#btnDelete').on('click', (event) => {
         $.ajax({
             type: 'delete',
-            url: `${RESOURCES_URI}/${$(event.target).data('id')}`
+            url: `${RESOURCES_URI}/${$(event.target).data('resource_id')}`
         }).done(result => {
             if (result.result) {
                 $('#divDelete').modal('hide');
@@ -149,7 +146,7 @@ const RESOURCE_TYPE_LIST = '/api/admin/resourceTypes';
     function update(data) {
         $.ajax({
             type: 'put',
-            url: `${RESOURCES_URI}/${data.id}`,
+            url: `${RESOURCES_URI}/${data.resource_id}`,
             data: data
         }).done(result => {
             if (result.result) {
