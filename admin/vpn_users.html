@@ -104,7 +104,7 @@
                   </h3>
                 </div>
                 <div class="card-body">
-                  <button type="button" class="btn btn-primary" id="btnNewRes">新建用户</button>
+                  <button type="button" class="btn btn-primary" id="btnNewUser">新建用户</button>
                 </div>
               </div>
             </div>
@@ -143,54 +143,44 @@
                 </button>
               </div>
               <form class="form-horizontal" id="formEditor">
-                <input type="hidden" name="id">
                 <div class="modal-body">
                   <div id="divError" class="alert alert-warning" style="display: none;">
                     <span id="spanError"></span>
                   </div>
                   <div class="form-group row">
-                    <label for="selectBranch" class="col-sm-2 col-form-label">分支</label>
+                    <label for="selectGroupPath" class="col-sm-2 col-form-label">组路径</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" id="selectBranch" name="branch_id"></select>
+                      <select class="form-control select2" id="selectGroupPath" name="group_path"></select>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="selectType" class="col-sm-2 col-form-label">类型</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" id="selectType" name="type_id"></select>
+                      <select class="form-control select2" id="selectType" name="type"></select>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="inputTag" class="col-sm-2 col-form-label">标记</label>
+                    <label for="inputUsername" class="col-sm-2 col-form-label">用户名</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputTag" name="tag" placeholder="标记">
+                      <input type="text" class="form-control edit-readonly" id="inputUsername" name="username" placeholder="建议同OA用户名">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="inputServiceIp" class="col-sm-2 col-form-label">服务IP</label>
+                    <label for="inputRealname" class="col-sm-2 col-form-label">真实姓名</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputServiceIp" name="service_ip"
-                        placeholder="服务IP（必选）">
+                      <input type="text" class="form-control" id="inputRealname" name="realname" placeholder="真实姓名">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="inputDomain" class="col-sm-2 col-form-label">域名绑定</label>
+                    <label for="selectIP" class="col-sm-2 col-form-label">IP</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputDomain" name="service_domain" placeholder="域名绑定">
+                      <select class="form-control select2" id="selectIP" name="ip"></select>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="inputServiceUrl" class="col-sm-2 col-form-label">服务URL</label>
+                    <label for="inputMobile" class="col-sm-2 col-form-label">电话</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputServiceUrl" name="service_url"
-                        placeholder="服务URL">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputRealIp" class="col-sm-2 col-form-label">真实IP</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputRealIp" name="real_ip"
-                        placeholder="真实IP（若未进行地址转换请留空）">
+                      <input type="text" class="form-control" id="inputMobile" name="mobile" placeholder="11位手机号">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -206,7 +196,7 @@
 
                 <div class="modal-footer justify-content-between">
                   <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                  <button type="submit" class="btn btn-primary">保存</button>
+                  <button type="submit" class="btn btn-primary" id="btnSave">保存</button>
                 </div>
               </form>
             </div>
@@ -292,7 +282,7 @@
   <!-- Page specific script -->
   <script src="js/common.js"></script>
   <script src="js/module_common.js"></script>
-  <script src="js/users.js"></script>
+  <script src="js/vpn_users.js"></script>
 </body>
 
 </html>

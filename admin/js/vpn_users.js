@@ -1,5 +1,8 @@
 const MENU_ID = 'YHGL_YHLB';
 const USERS_URI = '/api/admin/vpnUsers';
+const USER_GROUP_PATH_URI = '/api/admin/vpnUsers/groupPathList';
+const USER_AVAIL_IP_URI = '/api/admin/vpnUsers/availableIPList';
+const USER_TYPES_URI = '/api/admin/vpnUserTypes';
 
 (function ($) {
     'use strict'
@@ -12,12 +15,7 @@ const USERS_URI = '/api/admin/vpnUsers';
             responsive: true,
             columns: [
                 { data: 'group_path' },
-                {
-                    data: 'type',
-                    render: function (data, type, row) {
-                        return data;
-                    }
-                },
+                { data: 'type_name' },
                 { data: 'username' },
                 { data: 'realname' },
                 { data: 'ip' },
@@ -33,7 +31,7 @@ const USERS_URI = '/api/admin/vpnUsers';
                     }
                 },
                 {
-                    data: 'id',
+                    data: 'username',
                     render: function (data, type, row) {
                         return `<a href="#" class="edit-button"><i class="far fa-edit"></i></a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -53,35 +51,68 @@ const USERS_URI = '/api/admin/vpnUsers';
             });
 
         });
-        $.getJSON(BRANCH_LIST)
-            .done(data => {
-                let selectBranchData = data.data.map(v => {
-                    return {
-                        id: v.id,
-                        text: v.name
-                    };
-                });
-                $("#selectBranch").select2({
-                    data: selectBranchData
-                });
-            }).fail((jqXHR, textStatus, err) => {
-                console.error(err);
-            });
-        $.getJSON(RESOURCE_TYPE_LIST)
-            .done(data => {
-                let selectResTypeData = data.data.map(v => {
-                    return {
-                        id: v.id,
-                        text: v.name
-                    };
-                });
-                $("#selectType").select2({
-                    data: selectResTypeData
-                });
-            }).fail((jqXHR, textStatus, err) => {
-                console.error(err);
-            });
+        loadUserTypeData();
+        loadGroupPathData();
+        loadAvailableIPData();
+    }
 
+    function loadUserTypeData() {
+        $.getJSON(USER_TYPES_URI)
+            .done(data => {
+                let selectVpnUserTypeData = data.data.map(v => {
+                    return {
+                        id: v.type,
+                        text: v.name
+                    };
+                });
+                $("#selectType").empty();
+                $("#selectType").select2({
+                    data: selectVpnUserTypeData
+                });
+                $("#selectType").trigger('change');
+            }).fail((jqXHR, textStatus, err) => {
+                console.error(err);
+            });
+    }
+
+    function loadGroupPathData() {
+        $.getJSON(USER_GROUP_PATH_URI)
+            .done(data => {
+                let groupPathData = data.data.map(v => {
+                    return {
+                        id: v.group_path,
+                        text: v.group_path
+                    };
+                });
+                $("#selectGroupPath").empty();
+                $("#selectGroupPath").select2({
+                    data: groupPathData,
+                    tags: true
+                });
+                $("#selectGroupPath").trigger('change');
+            }).fail((jqXHR, textStatus, err) => {
+                console.error(err);
+            });
+    }
+
+    function loadAvailableIPData() {
+        $.getJSON(USER_AVAIL_IP_URI)
+            .done(data => {
+                let selectIPData = data.data.map(v => {
+                    return {
+                        id: v,
+                        text: v
+                    };
+                });
+                $("#selectIP").empty();
+                $("#selectIP").select2({
+                    data: selectIPData,
+                    tags: true
+                });
+                $("#selectIP").trigger('change');
+            }).fail((jqXHR, textStatus, err) => {
+                console.error(err);
+            });
     }
 
 
@@ -91,23 +122,26 @@ const USERS_URI = '/api/admin/vpnUsers';
         return '' === value || value.match(ip);
     }, 'Invalid IP address');
 
-    $('#btnNewRes').on('click', () => {
+    $('#btnNewUser').on('click', () => {
         $("#divError").hide();
         $('#divEditor').modal('show');
-        $("input[name='id']").val(null);
-        $('#editorTitle').text('创建资源');
+        $('#editorTitle').text('创建用户');
         $('#formEditor')[0].reset();
         $('.select2').trigger('change');
+        $('.edit-readonly').attr('readonly', false);
+        $('#btnSave').data('save_type', 'new');
     });
 
     $('#btnDelete').on('click', (event) => {
         $.ajax({
             type: 'delete',
-            url: `${RESOURCES_URI}/${$(event.target).data('id')}`
+            url: `${USERS_URI}/${$(event.target).data('username')}`
         }).done(result => {
             if (result.result) {
                 $('#divDelete').modal('hide');
                 dataTable.ajax.reload();
+                loadGroupPathData();
+                loadAvailableIPData();
             } else {
                 $('#pDelError').text(result.msg);
             }
@@ -120,48 +154,48 @@ const USERS_URI = '/api/admin/vpnUsers';
     function edit(data) {
         $("#divError").hide();
         $('#divEditor').modal('show');
-        $('#editorTitle').text('编辑资源');
+        $('#editorTitle').text('编辑用户');
         $('#formEditor')[0].reset();
+        let ipOption = new Option(data.ip, data.ip, false, true);
+        $('#selectIP').append(ipOption);
         $('.select2').trigger('change');
+        $('.edit-readonly').attr('readonly', true);
         $('#formEditor').jsonToForm(data);
+        $('#btnSave').data('save_type', 'edit');
     }
 
     function delComfirm(data) {
         $('#divDelete').modal('show');
-        $('#spanDel').text(`${data.branch}-${data.type}-${data.tag ? '(' + data.tag + ')' : ''}`);
-        $('#btnDelete').data('id', data.id);
+        $('#spanDel').text(`${data.username}(类型：${data.type_name})`);
+        $('#btnDelete').data('username', data.username);
     }
 
     function create(data) {
-        $.post(RESOURCES_URI, data).done(result => {
-            if (result.result) {
-                $('#divEditor').modal('hide');
-                dataTable.ajax.reload();
-            } else {
-                showErrMsg(result.msg);
-            }
-        }).fail((jqXHR, textStatus, err) => {
-            console.error(err);
-            showErrMsg('提交数据失败');
-        });
+        $.post(USERS_URI, data).done(editDone).fail(editFail);
     }
 
     function update(data) {
         $.ajax({
             type: 'put',
-            url: `${RESOURCES_URI}/${data.id}`,
+            url: `${USERS_URI}/${data.username}`,
             data: data
-        }).done(result => {
-            if (result.result) {
-                $('#divEditor').modal('hide');
-                dataTable.ajax.reload();
-            } else {
-                showErrMsg(result.msg);
-            }
-        }).fail((jqXHR, textStatus, err) => {
-            console.error(err);
-            showErrMsg('提交数据失败');
-        });
+        }).done(editDone).fail(editFail);
+    }
+
+    function editDone(result) {
+        if (result.result) {
+            $('#divEditor').modal('hide');
+            dataTable.ajax.reload();
+            loadGroupPathData();
+            loadAvailableIPData();
+        } else {
+            showErrMsg(result.msg);
+        }
+    }
+
+    function editFail(jqXHR, textStatus, err) {
+        console.error(err);
+        showErrMsg('提交数据失败');
     }
 
     function showErrMsg(msg) {
@@ -175,29 +209,33 @@ const USERS_URI = '/api/admin/vpnUsers';
             let data = Object.fromEntries(formData.entries());
             data.enabled = ("on" === data.enabled ? 1 : 0);
 
-            if (typeof data.id == 'undefined' || !data.id) {
+            if ($('#btnSave').data('save_type') === 'new') {
                 create(data);
             } else {
                 update(data);
             }
+            return false;
         },
         rules: {
-            service_ip: {
+            username: {
                 required: true,
-                IP4Checker: true
             },
-            real_ip: {
-                required: false,
-                IP4Checker: true
+            realname: {
+                required: true,
+            },
+            mobile: {
+                required: true
             }
         },
         messages: {
-            service_ip: {
-                required: "Please enter a service IP",
-                IP4Checker: "Please enter a vaild IP address"
+            username: {
+                required: "Please enter a username",
             },
-            real_ip: {
-                IP4Checker: "Please enter a vaild IP address"
+            realname: {
+                IP4Checker: "Please enter the real name"
+            },
+            mobile: {
+                IP4Checker: "Please enter the mobile number"
             }
         },
         errorElement: 'span',
