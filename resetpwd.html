@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sugon SD-WAN | VPN密码重置</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="./css/googlefonts.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="./plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="./dist/css/adminlte.min.css">
+</head>
+
+<body class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="#"><b>Sugon SD-WAN</b><br/>VPN密码重置</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">请输入用户名与验证码</p>
+        <div id="divError" class="alert alert-warning" style="display: none;">
+          <span id="spanError"></span>
+        </div>
+        <form id="formLogin">
+          <div class="input-group mb-3">
+            <input type="text" name="username" class="form-control" autocomplete="off" placeholder="用户名">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" name="captcha" class="form-control" autocomplete="off" placeholder="验证码">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-walking"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3" id="divVerifyCode" style="display: none;">
+            <input type="text" name="code" class="form-control" autocomplete="off" placeholder="短信验证码">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-walking"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <img id="imgCaptcha" style="height: 38px;" alt="Captcha" />
+            </div>
+            <!-- /.col -->
+            <div class="col-6">
+              <button type="submit" class="btn btn-primary btn-block" id="btnSubmit">发送验证码</button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery -->
+  <script src="./plugins/jquery/jquery.min.js"></script>
+  <!-- jQuery Validation-->
+  <script src="./plugins/jquery-validation/jquery.validate.min.js"></script>
+  <script src="./plugins/jquery-validation/additional-methods.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="./dist/js/adminlte.min.js"></script>
+  <!-- Jsencrypt -->
+  <script src="./3rd/jsencrypt/jsencrypt.min.js"></script>
+  <!-- JS Cookie -->
+  <script src="./3rd/js.cookie-2.2.1.min.js"></script>
+  <!-- Login Page -->
+  <script src="admin/js/common.js"></script>
+  <script src="js/resetpwd.js"></script>
+</body>
+
+</html>
