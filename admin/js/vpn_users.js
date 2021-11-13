@@ -13,6 +13,7 @@ const USER_TYPES_URI = '/api/admin/vpnUserTypes';
         dataTable = $('#tableUsers').DataTable({
             ajax: USERS_URI,
             responsive: true,
+            select: true,
             columns: [
                 { data: 'group_path' },
                 { data: 'type_name' },
@@ -50,10 +51,20 @@ const USER_TYPES_URI = '/api/admin/vpnUserTypes';
                 delComfirm(dataTable.row($(event.target).closest('tr')).data());
             });
 
-        });
+        }).on('select', handleSelect)
+            .on('deselect', handleSelect);
+
         loadUserTypeData();
         loadGroupPathData();
         loadAvailableIPData();
+    }
+
+    function handleSelect() {
+        if (dataTable.rows({ selected: true }).count() > 0) {
+            $('#btnExport').removeAttr('disabled');
+        } else {
+            $('#btnExport').attr('disabled', 'disabled');
+        }
     }
 
     function loadUserTypeData() {
@@ -150,6 +161,38 @@ const USER_TYPES_URI = '/api/admin/vpnUserTypes';
             $('#pDelError').text('删除数据失败');
         });
     });
+
+    $('#btnExport').on('click', (event) => {
+        doExport();
+    });
+
+    async function doExport() {
+        const header = ['#每行前面的\'#\'代表该行是注释行，而不是需导入的数据 ,,,,,,,',
+            '#请参考下面的示例添加需导入的用户，带*的字段为必填项，请不要删除列及修改列的顺序,,,,,,,',
+            '#用户名(*),所属组路径(*),密码,手机号码,虚拟IP地址，留空表示自动分配,用户描述,所属CA,证书绑定字段'];
+
+        const exportData = dataTable.rows({ selected: true }).data();
+        if (0 == exportData.length) {
+            return;
+        }
+        let lines = [].concat(header);
+        exportData.toArray().forEach(d => {
+            let line = [d.username, d.group_path, d.username, d.mobile, d.ip, d.realname, '', ''].join(',');
+            lines.push(line);
+        });
+
+        let exportStr = lines.join('\r\n');
+        let exportGbk = new Uint8Array(GBK.encode(exportStr));
+        const blob = new Blob([exportGbk], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'test.csv';
+        document.documentElement.appendChild(a);
+        a.click();
+        document.documentElement.removeChild(a);
+    }
 
     function edit(data) {
         $("#divError").hide();
